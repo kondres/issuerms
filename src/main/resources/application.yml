@@ -1,0 +1,38 @@
+server:
+  port: 9092
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: issuerms
+  datasource:
+    url: jdbc:h2:mem:amazingbooksdb
+    driver-class-name: org.h2.Driver
+    username: user
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+#0Auth configuration
+  security:
+    oauth2:
+      client:
+        registration:
+          custom-client:
+            client-id: your-client-id
+            client-secret: your-client-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/custom-client
+            scope: read,write
+            client-name: Custom Client
+            provider: custom-provider
+        provider:
+          custom-provider:
+            authorization-uri: http://oauth-provider.com/oauth/authorize
+            token-uri: http://oauth-provider.com/oauth/token
